@@ -1,6 +1,7 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
+using ECommerce.ViewModels;
 
 namespace ECommerce.Application.Services
 {
@@ -12,8 +13,9 @@ namespace ECommerce.Application.Services
         {
             _products = products;   
         }
-        public bool Add(Product newProduct)
+        public bool Add(ProductRequest request)
         {
+            var newProduct = GetProductFromRequest(request);
             return _products.Add(newProduct);
         }
 
@@ -32,19 +34,14 @@ namespace ECommerce.Application.Services
             return _products.GetAll();
         }
 
-        public bool Update(Product newProduct)
+        public bool Update(ProductRequest request)
         {
+            var newProduct = GetProductFromRequest(request);
             return _products.Update(newProduct);
         }
-
-        bool IProductService.Delete(uint id)
+        public Product GetProductFromRequest(ProductRequest request)
         {
-            throw new NotImplementedException();
-        }
-
-        bool IProductService.Update(Product newProduct)
-        {
-            throw new NotImplementedException();
+            return new Product(request.Name, request.Description, request.Price);
         }
     }
 }

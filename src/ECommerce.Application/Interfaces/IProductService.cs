@@ -1,5 +1,6 @@
 ﻿
 using ECommerce.Domain.Models;
+using ECommerce.ViewModels;
 
 namespace ECommerce.Application.Interfaces
 {
@@ -7,8 +8,8 @@ namespace ECommerce.Application.Interfaces
     {
         IEnumerable<Product> GetAll();
         Product Get(uint id);
-        bool Add(Product newProduct);
-        bool Update(Product newProduct);
+        bool Add(ProductRequest newProduct);
+        bool Update(ProductRequest newProduct);
         bool Delete(uint id);
     }
 }

@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ECommerce.Application\ECommerce.Application.csproj" />
     <ProjectReference Include="..\ECommerce.Infra\ECommerce.Infra.csproj" />
+    <ProjectReference Include="..\ECommerce.ViewModels\ECommerce.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

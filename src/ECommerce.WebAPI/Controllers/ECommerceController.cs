@@ -1,5 +1,6 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
+using ECommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.WebAPI.Controllers
@@ -20,6 +21,13 @@ namespace ECommerce.WebAPI.Controllers
         {
             var products = _service.GetAll();
             return Ok(products);
+        }
+
+        [HttpPost]
+        public IActionResult Add(ProductRequest request)
+        {
+            if (_service.Add(request)) return Ok(request);
+            return BadRequest();
         }
     }
 }
