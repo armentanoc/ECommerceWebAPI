@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace ECommerce.Domain.Models
 {
     public class BaseEntity
     {
         public uint Id { get; set; }
+
+        public void SetId(uint id)
+        {
+            Id = id;
+        }
     }
 }

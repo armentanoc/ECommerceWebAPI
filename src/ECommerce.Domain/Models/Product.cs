@@ -1,4 +1,5 @@
 ﻿using ECommerce.Domain.Utils;
+
 namespace ECommerce.Domain.Models
 {
     public class Product : BaseEntity
