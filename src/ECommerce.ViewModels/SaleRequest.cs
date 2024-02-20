@@ -5,8 +5,8 @@ namespace ECommerce.ViewModels
 {
     public class SaleRequest : Request
     {
-        [Required]
-        public uint ProductId { get; private set; }
+        [Required(ErrorMessage = "O Id do produto é obrigatório.")]
+        public uint ProductId { get; init; }
 
         public SaleRequest(uint productId)
         {

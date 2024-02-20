@@ -32,7 +32,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] ProductRequest request)
+        public IActionResult Add([FromBody] ProductRequest request)
         {
             if (_service.Add(request)) return Ok(request);
             return BadRequest();

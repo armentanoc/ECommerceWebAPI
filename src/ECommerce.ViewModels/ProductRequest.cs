@@ -4,10 +4,10 @@ namespace ECommerce.ViewModels
 {
     public class ProductRequest : Request
     {
-        [Required(ErrorMessage = "Name is a required property.")]
+        [Required(ErrorMessage = "O nome do produto é obrigatório.")]
         public string Name { get; init; }
 
-        [Required(ErrorMessage = "Price is a required property.")]
+        [Required(ErrorMessage = "O preço do produto é obrigatório.")]
         public decimal Price { get; init; }
 
         //Optional
@@ -17,6 +17,10 @@ namespace ECommerce.ViewModels
         {
             Name = name;
             Price = price;
+            
+            if(description.Equals("string"))
+                description = "Vazia";
+
             Description = description;
         }
     }

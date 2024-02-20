@@ -32,10 +32,10 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] SaleRequest saleRequest)
+        public IActionResult Add([FromBody] SaleRequest saleRequest)
         {
-            var sale = _service.Add(saleRequest);
-            return Ok(sale);
+            if (_service.Add(saleRequest)) return Ok(saleRequest);
+            return BadRequest();
         }
     }
 }

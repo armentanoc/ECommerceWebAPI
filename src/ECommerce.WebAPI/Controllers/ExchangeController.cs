@@ -32,7 +32,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] ExchangeRequest exchangeRequest)
+        public IActionResult Add([FromBody] ExchangeRequest exchangeRequest)
         {
             var exchange = _service.Add(exchangeRequest);
             return Ok(exchange);

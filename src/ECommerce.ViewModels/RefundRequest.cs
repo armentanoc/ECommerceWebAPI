@@ -5,8 +5,8 @@ namespace ECommerce.ViewModels
 {
     public class RefundRequest : Request
     {
-        [Required]
-        public uint SaleId { get; private set; }
+        [Required(ErrorMessage = "O Id da venda é obrigatório.")]
+        public uint SaleId { get; init; }
 
         public RefundRequest(uint saleId)
         {

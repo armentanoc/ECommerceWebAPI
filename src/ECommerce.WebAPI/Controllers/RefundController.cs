@@ -32,7 +32,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] RefundRequest request)
+        public IActionResult Add([FromBody] RefundRequest request)
         {
             var refund = _service.Add(request);
             return Ok(refund);
