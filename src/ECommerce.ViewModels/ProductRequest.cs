@@ -2,7 +2,7 @@
 
 namespace ECommerce.ViewModels
 {
-    public class ProductRequest
+    public class ProductRequest : Request
     {
         [Required(ErrorMessage = "Name is a required property.")]
         public string Name { get; init; }
