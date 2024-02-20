@@ -4,12 +4,8 @@ using ECommerce.ViewModels;
 
 namespace ECommerce.Application.Interfaces
 {
-    public interface IProductService
+    public interface IProductService : IService<Product, ProductRequest>
     {
-        IEnumerable<Product> GetAll();
-        Product Get(uint id);
-        bool Add(ProductRequest newProduct);
-        bool Update(ProductRequest newProduct);
-        bool Delete(uint id);
+        public Product GetProductFromRequest(ProductRequest request);
     }
 }
