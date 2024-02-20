@@ -1,0 +1,32 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste CORS</title>
+</head>
+
+<body>
+    <button onclick="getAllProducts()">Visualizar Produtos</button>
+    <br>
+    <br>
+    <div id="products"></div>
+    <script>
+        function getAllProducts() {
+            const requestOptions = {
+                method: "GET",
+                redirect: "follow"
+            };
+
+            fetch("http://localhost:5500/api/product", requestOptions)
+                .then((response) => response.json())
+                .then((result) => {
+                    document.getElementById("products").innerText = JSON.stringify(result, null, 2);
+                })
+                .catch((error) => document.getElementById("products").innerText = "Erro na requisição");
+        }
+
+    </script>
+</body>
+
+</html>

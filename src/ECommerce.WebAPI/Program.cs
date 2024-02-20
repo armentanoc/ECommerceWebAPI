@@ -15,7 +15,15 @@ namespace ECommerce.WebAPI
             var builder = WebApplication.CreateBuilder(args);
 
             //Cors
-            //Adicionar
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins("http://localhost:5000")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
 
             // ILogger
             builder.Services.AddLogging();
@@ -53,6 +61,9 @@ namespace ECommerce.WebAPI
                     c.RoutePrefix = "swagger";
                 });
             }
+
+            //Adds Cors Middleware
+            app.UseCors();
 
             // Logging Middleware
             app.UseMiddleware<LoggingMiddleware>();
