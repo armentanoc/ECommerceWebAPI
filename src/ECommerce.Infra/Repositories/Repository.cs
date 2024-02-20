@@ -7,6 +7,7 @@ namespace ECommerce.Infra.Repositories
     {
         private readonly List<T> _entities = new();
         private uint _nextId = 1;
+        private string _specificEntity = typeof(T).Name;
         public bool Add(T entityToAdd)
         {
             if (!EntityExist(entityToAdd))
@@ -15,7 +16,7 @@ namespace ECommerce.Infra.Repositories
                 _entities.Add(entityToAdd);
                 return true;
             }
-            throw new Exception($"Entity {nameof(entityToAdd)} with properties described already exist.");
+            throw new Exception($"Entity {_specificEntity} with properties described already exist.");
         }
 
         public bool Delete(uint id)
@@ -29,8 +30,7 @@ namespace ECommerce.Infra.Repositories
         {
             if (_entities.FirstOrDefault(entity => entity.Id == id) is T entityToReturn)
                 return entityToReturn;
-
-            throw new Exception($"Entity {nameof(T)} with id {id} doesn't exist.");
+            throw new Exception($"Entity {_specificEntity} with id {id} doesn't exist.");
         }
 
 
@@ -46,7 +46,7 @@ namespace ECommerce.Infra.Repositories
             if (existingEntity.Equals(newEntity))
                 return true;
 
-            throw new Exception($"Updated couldn't be performed in entity {nameof(newEntity)}");
+            throw new Exception($"Updated couldn't be performed in entity {_specificEntity}");
         }
 
         public bool EntityExist(T entityToAdd)
