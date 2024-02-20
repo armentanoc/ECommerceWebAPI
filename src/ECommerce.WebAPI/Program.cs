@@ -4,6 +4,7 @@ using ECommerce.Application.Services;
 using ECommerce.Infra.Interfaces;
 using ECommerce.Infra.Repositories;
 using ECommerce.WebAPI.Filters;
+using ECommerce.WebAPI.Middlewares;
 
 namespace ECommerce.WebAPI
 {
@@ -13,18 +14,28 @@ namespace ECommerce.WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Cors
+            //Adicionar
+
             // ILogger
             builder.Services.AddLogging();
 
-            // Repository
+            // Repositories
             builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-            
-            // Service
+            builder.Services.AddSingleton<ISaleRepository, SaleRepository>();
+            builder.Services.AddSingleton<IRefundRepository, RefundRepository>();
+            builder.Services.AddSingleton<IExchangeRepository, ExchangeRepository>();
+
+            // Services
             builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<ISaleService, SaleService>();
+            builder.Services.AddScoped<IRefundService, RefundService>();
+            builder.Services.AddScoped<IExchangeService, ExchangeService>();
 
             // Controllers
             builder.Services.AddControllers(options =>
             {
+                // Exception Filter
                 options.Filters.Add<ExceptionFilter>();
             });
 
@@ -42,6 +53,9 @@ namespace ECommerce.WebAPI
                     c.RoutePrefix = "swagger";
                 });
             }
+
+            // Logging Middleware
+            app.UseMiddleware<LoggingMiddleware>();
 
             app.UseHttpsRedirection();
 
