@@ -5,11 +5,18 @@ namespace ECommerce.Infra.Repositories
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
+        internal static Product product1 = new Product("Camisa Nike", "Tamanho G", 99.45m);
+        internal static Product product2 = new Product("Short Adidas", "Tamanho M", 89.50m);
+        internal static Product product3 = new Product("Calça Oxer", "Tamanho P", 69.99m);
         public ProductRepository()
         {
-            Add(new Product("Camisa Nike", "Tamanho G", 99.45m));
-            Add(new Product("Short Adidas", "Tamanho M", 89.50m));
-            Add(new Product("Calça Oxer", "Tamanho P", 69.99m));
+            product1.SetId(1);
+            product2.SetId(2);
+            product3.SetId(3);
+
+            Add(product1);
+            Add(product2);
+            Add(product3);
         }
     }
 }
