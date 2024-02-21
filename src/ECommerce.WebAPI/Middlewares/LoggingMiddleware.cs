@@ -1,4 +1,6 @@
-﻿namespace ECommerce.WebAPI.Middlewares
+﻿using System.Diagnostics;
+
+namespace ECommerce.WebAPI.Middlewares
 {
     internal class LoggingMiddleware
     {
@@ -13,11 +15,18 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogInformation($"Início da requisição: {context.Request.Method} {context.Request.Path}");
+            var requestDetails = $"{context.Request.Method} {context.Request.Path}";
+
+            _logger.LogInformation($"Início da requisição: {requestDetails}");
+
+            var stopwatch = Stopwatch.StartNew();
 
             await _next(context);
 
-            _logger.LogInformation($"Fim da requisição: {context.Response.StatusCode} {context.Response.Body}");
+            stopwatch.Stop();
+            
+            _logger.LogInformation($"Fim da Requisição: {requestDetails} - Status: {context.Response.StatusCode} - Elapsed Time: {stopwatch.ElapsedMilliseconds}ms");
+            
         }
     }
 }

@@ -38,5 +38,13 @@ namespace ECommerce.WebAPI.Controllers
                 return Ok(product);
             return BadRequest(request);
         }
+
+        [HttpGet]
+        [Route("filter")]
+        public ActionResult<IEnumerable<Product>> FilterByName([FromQuery] string name)
+        {
+            var filteredProducts = _service.FilterByName(name);
+            return Ok(filteredProducts);
+        }
     }
 }
