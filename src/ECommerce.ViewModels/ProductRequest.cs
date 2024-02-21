@@ -10,15 +10,19 @@ namespace ECommerce.ViewModels
         [Required(ErrorMessage = "O preço do produto é obrigatório.")]
         public decimal Price { get; init; }
 
+        [Required(ErrorMessage = "A quantidade do produto é obrigatória.")]
+        public uint Quantity { get; init; }
+
         //Optional
         public string Description { get; init; }
 
-        public ProductRequest(string name, decimal price, string description = "Vazia")
+        public ProductRequest(string name, decimal price, uint quantity, string description = "Vazia")
         {
             Name = name;
             Price = price;
-            
-            if(description.Equals("string"))
+            Quantity = quantity;
+
+            if(description.Equals("string")) 
                 description = "Vazia";
 
             Description = description;

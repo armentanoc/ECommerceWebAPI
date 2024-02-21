@@ -11,7 +11,7 @@ namespace ECommerce.Domain.Utils
 
         public static bool IsDateTimeValid(DateTime date)
         {
-            if (date != null && date != default(DateTime)) return true;
+            if (date != default(DateTime)) return true;
             throw new ArgumentException($"DateTime can't be null or default. ({date})");
         }
     }

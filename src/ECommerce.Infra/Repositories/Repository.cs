@@ -8,13 +8,13 @@ namespace ECommerce.Infra.Repositories
         private readonly List<T> _entities = new();
         private uint _nextId = 1;
         private string _specificEntity = typeof(T).Name;
-        public bool Add(T entityToAdd)
+        public T Add(T entityToAdd)
         {
             if (!EntityExist(entityToAdd))
             {
                 entityToAdd.Id = _nextId++;
                 _entities.Add(entityToAdd);
-                return true;
+                return entityToAdd;
             }
             throw new Exception($"Entity {_specificEntity} with properties described already exist.");
         }
@@ -29,7 +29,11 @@ namespace ECommerce.Infra.Repositories
         public T Get(uint id)
         {
             if (_entities.FirstOrDefault(entity => entity.Id == id) is T entityToReturn)
+            {
+                entityToReturn.SetId(id);
                 return entityToReturn;
+            }
+
             throw new Exception($"Entity {_specificEntity} with id {id} doesn't exist.");
         }
 
@@ -39,14 +43,18 @@ namespace ECommerce.Infra.Repositories
             return _entities;
         }
 
-        public bool Update(T newEntity)
+        public T Update(T newEntity)
         {
             var existingEntity = Get(newEntity.Id);
 
-            if (existingEntity.Equals(newEntity))
-                return true;
+            foreach (var prop in typeof(T).GetProperties().Where(prop => prop.Name != "Id"))
+            {
+                var newValue = prop.GetValue(newEntity);
+                prop.SetValue(existingEntity, newValue);
+            }
 
-            throw new Exception($"Updated couldn't be performed in entity {_specificEntity}");
+            return existingEntity;
+
         }
 
         public bool EntityExist(T entityToAdd)

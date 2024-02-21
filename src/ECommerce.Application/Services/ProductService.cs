@@ -13,9 +13,9 @@ namespace ECommerce.Application.Services
         {
             _products = products;   
         }
-        public bool Add(ProductRequest request)
+        public Product Add(ProductRequest request)
         {
-            var newProduct = GetProductFromRequest(request);
+            var newProduct = GetProductByRequest(request);
             return _products.Add(newProduct);
         }
 
@@ -34,14 +34,33 @@ namespace ECommerce.Application.Services
             return _products.GetAll();
         }
 
-        public bool Update(ProductRequest request)
+        public Product Update(ProductRequest request)
         {
-            var newProduct = GetProductFromRequest(request);
+            var newProduct = GetProductByRequest(request);
             return _products.Update(newProduct);
         }
-        public Product GetProductFromRequest(ProductRequest request)
+
+        public Product Update(Product product)
         {
-            return new Product(request.Name, request.Description, request.Price);
+            return _products.Update(product);
+        }
+        public Product GetProductByRequest(ProductRequest request)
+        {
+            return new Product(request.Name, request.Description, request.Price, request.Quantity);
+        }
+
+        public Product TryIncreasingQuantity(Product product)
+        {
+            product.IncreaseQuantity();
+            Update(product);
+            return product;
+        }
+
+        public Product TryDecreasingQuantity(Product product)
+        {
+            product.DecreaseQuantity();
+            Update(product);
+            return product;
         }
     }
 }

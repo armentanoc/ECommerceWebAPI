@@ -4,15 +4,29 @@ namespace ECommerce.Domain.Models
 {
     public class Product : BaseEntity
     {
+        public uint QuantityRemaining { get; private set; }
         public string Name { get; private set; }
         public string Description { get; private set; }
         public decimal Price { get; private set; }
 
-        public Product(string name, string description, decimal price)
+        public Product(string name, string description, decimal price, uint quantity)
         {
             if(PrimaryValidator.IsValid(name)) Name = name;
             if(PrimaryValidator.IsValid(description)) Description = description;
             if(PrimaryValidator.IsValid(price)) Price = price;
+            if(PrimaryValidator.IsValid(quantity)) QuantityRemaining = quantity;
+        }
+
+        public void IncreaseQuantity()
+        {
+            QuantityRemaining++;
+        }
+        public void DecreaseQuantity()
+        {
+            if (QuantityRemaining < 1)
+                throw new InsufficientQuantityException($"Product quantity is insufficient. Operation can't be executed. (Name: {Name}, Id: {Id})");
+            else
+                QuantityRemaining--;
         }
     }
 }

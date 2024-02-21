@@ -13,11 +13,11 @@
 
         public async Task InvokeAsync(HttpContext context)
         {
-            _logger.LogInformation($"Início da requisição: {context.Request.Path}");
+            _logger.LogInformation($"Início da requisição: {context.Request.Method} {context.Request.Path}");
 
             await _next(context);
 
-            _logger.LogInformation($"Fim da requisição: {context.Request.Path}");
+            _logger.LogInformation($"Fim da requisição: {context.Response.StatusCode} {context.Response.Body}");
         }
     }
 }

@@ -9,6 +9,9 @@ namespace ECommerce.Infra.Repositories
         public static Sale sale2 = new Sale(ProductRepository.product2);
         public SaleRepository()
         {
+            sale1.CancelSale();
+            sale2.CancelSale();
+
             sale1.SetId(1);
             sale2.SetId(2);
 

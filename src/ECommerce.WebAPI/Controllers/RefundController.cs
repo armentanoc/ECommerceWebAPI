@@ -6,7 +6,7 @@ using ECommerce.Application.Interfaces;
 namespace ECommerce.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/refunds")]
+    [Route("api/refund")]
     public class RefundController : Controller
     {
         private readonly IRefundService _service;

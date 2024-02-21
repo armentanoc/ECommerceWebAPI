@@ -6,7 +6,7 @@ using ECommerce.Application.Interfaces;
 namespace ECommerce.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/sales")]
+    [Route("api/sale")]
     public class SaleController : Controller
     {
         private readonly ISaleService _service;
@@ -34,8 +34,9 @@ namespace ECommerce.WebAPI.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] SaleRequest saleRequest)
         {
-            if (_service.Add(saleRequest)) return Ok(saleRequest);
-            return BadRequest();
+            if (_service.Add(saleRequest) is Sale sale) 
+                return Ok(sale);
+            return BadRequest(saleRequest);
         }
     }
 }

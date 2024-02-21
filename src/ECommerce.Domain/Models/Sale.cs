@@ -9,8 +9,10 @@ namespace ECommerce.Domain.Models
         public decimal Amount { get; private set; }
         public Product SoldProduct { get; private set; }
 
+        public bool IsCancelled { get; private set; }
         public Sale(Product soldProduct)
         {
+            IsCancelled = false;
             SaleDate = DateTime.Now;
             if(ObjectValidator.IsValid(soldProduct)) SoldProduct = soldProduct;
             if(PrimaryValidator.IsValid(soldProduct.Price)) Amount = soldProduct.Price;
@@ -20,6 +22,11 @@ namespace ECommerce.Domain.Models
             if(ObjectValidator.IsDateTimeValid(saleDate)) SaleDate = saleDate;
             if(ObjectValidator.IsValid(soldProduct)) SoldProduct = soldProduct;
             if(PrimaryValidator.IsValid(soldProduct.Price)) Amount = soldProduct.Price;
+        }
+
+        public void CancelSale()
+        {
+            IsCancelled = true;
         }
     }
 }

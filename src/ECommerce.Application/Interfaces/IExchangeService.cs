@@ -6,6 +6,6 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IExchangeService : IService<Exchange, ExchangeRequest>
     {
-        public Exchange GetExchangeFromRequest(ExchangeRequest request);
+        Exchange GetExchangeFromRequest(ExchangeRequest request);
     }
 }

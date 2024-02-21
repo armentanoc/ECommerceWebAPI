@@ -12,7 +12,7 @@ namespace ECommerce.Domain.Utils
         public static bool IsValid(decimal value)
         {
             if (value > 0) return true;
-            throw new ArgumentException($"Decimal value must be greater than zero. ({value})");
+            throw new ArgumentException($"Value must be greater than zero. ({value})");
         }
     }
 }

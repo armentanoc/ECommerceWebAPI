@@ -7,7 +7,9 @@ namespace ECommerce.Infra.Repositories
     {
         public ExchangeRepository()
         {
-            Add(new Exchange(SaleRepository.sale2, ProductRepository.product3));
+            var exchange = new Exchange(SaleRepository.sale2, ProductRepository.product3);
+            exchange.OriginalSale.CancelSale();
+            Add(exchange);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IRefundService : IService<Refund, RefundRequest>
     {
-        public Refund GetRefundFromRequest(RefundRequest request);
+        Refund GetRefundFromRequest(RefundRequest request);
     }
 }

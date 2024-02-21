@@ -34,8 +34,9 @@ namespace ECommerce.WebAPI.Controllers
         [HttpPost]
         public IActionResult Add([FromBody] ProductRequest request)
         {
-            if (_service.Add(request)) return Ok(request);
-            return BadRequest();
+            if (_service.Add(request) is Product product) 
+                return Ok(product);
+            return BadRequest(request);
         }
     }
 }

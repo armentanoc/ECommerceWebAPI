@@ -6,7 +6,7 @@ using ECommerce.Application.Interfaces;
 namespace ECommerce.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/exchanges")]
+    [Route("api/exchange")]
     public class ExchangeController : Controller
     {
         private readonly IExchangeService _service;

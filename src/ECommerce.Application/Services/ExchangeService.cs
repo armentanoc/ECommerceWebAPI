@@ -17,7 +17,7 @@ namespace ECommerce.Application.Services
             _productService = productService;
             _saleService = saleService;
         }
-        public bool Add(ExchangeRequest request)
+        public Exchange Add(ExchangeRequest request)
         {
             var newExchange = GetExchangeFromRequest(request);
             return _exchanges.Add(newExchange);
@@ -38,19 +38,20 @@ namespace ECommerce.Application.Services
             return _exchanges.GetAll();
         }
 
-        public bool Update(ExchangeRequest request)
+        public Exchange Update(ExchangeRequest request)
         {
             throw new NotImplementedException();
         }
         public Exchange GetExchangeFromRequest(ExchangeRequest request)
         {
-            var saleId = request.SaleId;
-            var sale = _saleService.Get(saleId);
-            sale.SetId(saleId);
+            var sale = _saleService.Get(id: request.SaleId);
+            _saleService.TryCancellingSale(sale);
 
-            var productId = request.ProductId;
-            var newProduct = _productService.Get(productId);
-            newProduct.SetId(productId);
+            var oldProduct = sale.SoldProduct;
+            var newProduct = _productService.Get(id: request.ProductId);
+
+            _productService.TryDecreasingQuantity(newProduct);
+            _productService.TryIncreasingQuantity(oldProduct);
 
             return new Exchange(sale, newProduct);
         }

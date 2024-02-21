@@ -6,6 +6,8 @@ namespace ECommerce.Application.Interfaces
 {
     public interface ISaleService : IService<Sale, SaleRequest>
     {
-        public Sale GetSaleFromRequest(SaleRequest request);
+        Sale GetSaleFromRequest(SaleRequest request);
+        void TryCancellingSale(Sale sale);
+        Sale Update(Sale sale);
     }
 }

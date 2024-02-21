@@ -1,4 +1,5 @@
 ﻿using ECommerce.Application.Interfaces;
+using ECommerce.Application.CustomExceptions;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
 using ECommerce.ViewModels;
@@ -15,7 +16,7 @@ namespace ECommerce.Application.Services
             _productService = productService;
             _sales = sales;   
         }
-        public bool Add(SaleRequest request)
+        public Sale Add(SaleRequest request)
         {
             var newSale = GetSaleFromRequest(request);
             return _sales.Add(newSale);
@@ -36,17 +37,30 @@ namespace ECommerce.Application.Services
             return _sales.GetAll();
         }
 
-        public bool Update(SaleRequest request)
+        public Sale Update(Sale sale)
         {
-            throw new NotImplementedException();
+            return _sales.Update(sale);
         }
+
         public Sale GetSaleFromRequest(SaleRequest request)
         {
-            var productId = request.ProductId;
-            var product = _productService.Get(productId);
-            product.SetId(productId);
-
+            var product = _productService.Get(id: request.ProductId);
+            _productService.TryDecreasingQuantity(product);
             return new Sale(product);
+        }
+
+        public void TryCancellingSale(Sale sale)
+        {
+            if (sale.IsCancelled)
+                throw new SaleIsAlreadyCancelledException();
+            else
+                sale.CancelSale();
+                Update(sale);
+        }
+
+        public Sale Update(SaleRequest newEntityRequest)
+        {
+            throw new NotImplementedException();
         }
     }
 }

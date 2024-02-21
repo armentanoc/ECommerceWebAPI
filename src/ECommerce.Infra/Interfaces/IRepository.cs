@@ -8,8 +8,8 @@ namespace ECommerce.Infra.Interfaces
     {
         public IEnumerable<T> GetAll();
         public T Get(uint id);
-        public bool Add(T newEntity);
-        public bool Update(T newEntity);
+        public T Add(T newEntity);
+        public T Update(T newEntity);
         public bool Delete(uint id);
         public bool EntityExist(T newEntity);
     }

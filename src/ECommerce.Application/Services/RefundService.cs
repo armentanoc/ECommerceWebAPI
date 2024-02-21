@@ -9,13 +9,15 @@ namespace ECommerce.Application.Services
     {
         private readonly IRefundRepository _refunds;
         private readonly ISaleService _saleService;
+        private readonly IProductService _productService;
 
-        public RefundService(IRefundRepository refunds, ISaleService saleService)
+        public RefundService(IRefundRepository refunds, ISaleService saleService, IProductService productService)
         {
             _saleService = saleService;
+            _productService = productService;
             _refunds = refunds;
         }
-        public bool Add(RefundRequest request)
+        public Refund Add(RefundRequest request)
         {
             var newRefund = GetRefundFromRequest(request);
             return _refunds.Add(newRefund);
@@ -36,16 +38,15 @@ namespace ECommerce.Application.Services
             return _refunds.GetAll();
         }
 
-        public bool Update(RefundRequest request)
+        public Refund Update(RefundRequest request)
         {
             throw new NotImplementedException();
         }
         public Refund GetRefundFromRequest(RefundRequest request)
         {
-            var saleId = request.SaleId;
-            var sale = _saleService.Get(saleId);
-            sale.SetId(saleId);
-
+            var sale = _saleService.Get(id: request.SaleId);
+            _saleService.TryCancellingSale(sale);
+            _productService.TryIncreasingQuantity(product: sale.SoldProduct);
             return new Refund(sale);
         }
     }

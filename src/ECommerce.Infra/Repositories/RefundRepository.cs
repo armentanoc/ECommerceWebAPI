@@ -7,7 +7,9 @@ namespace ECommerce.Infra.Repositories
     {
         public RefundRepository()
         {
-            Add(new Refund(SaleRepository.sale1));
+            var refund = new Refund(SaleRepository.sale1);
+            refund.OriginalSale.CancelSale();
+            Add(refund);
         }
     }
 }
