@@ -1,22 +1,34 @@
 ﻿using ECommerce.Domain.Models;
+using ECommerce.Infra.Context;
 using ECommerce.Infra.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace ECommerce.Infra.Repositories
 {
     public class SaleRepository : Repository<Sale>, ISaleRepository
     {
-        public static Sale sale1 = new Sale(ProductRepository.product1);
-        public static Sale sale2 = new Sale(ProductRepository.product2);
-        public SaleRepository()
+        public SaleRepository(AppDbContext context) : base(context)
         {
-            sale1.CancelSale();
-            sale2.CancelSale();
+            //required by EF
+        }
 
-            sale1.SetId(1);
-            sale2.SetId(2);
+        public override Sale Get(uint id)
+        {
+            if (_context.Sale
+                    .Include(sale => sale.SoldProduct)
+                    .FirstOrDefault(entity => entity.Id == id) is Sale entityToReturn)
+            {
+                entityToReturn.SetId(id);
+                _context.SaveChangesAsync();
+                return entityToReturn;
+            }
 
-            Add(sale1);
-            Add(sale2);
+            throw new Exception($"Entity {nameof(entityToReturn)} with id {id} doesn't exist.");
+        }
+
+        public override IEnumerable<Sale> GetAll()
+        {
+            return _context.Sale.Include(s => s.SoldProduct).ToList();
         }
     }
 }

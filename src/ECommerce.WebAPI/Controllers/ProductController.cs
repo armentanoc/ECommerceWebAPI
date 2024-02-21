@@ -46,5 +46,14 @@ namespace ECommerce.WebAPI.Controllers
             var filteredProducts = _service.FilterByName(name);
             return Ok(filteredProducts);
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public IActionResult Delete([FromRoute] uint id)
+        {
+            if (_service.Delete(id))
+                return NoContent();
+            return BadRequest();
+        }
     }
 }

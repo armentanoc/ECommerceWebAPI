@@ -9,6 +9,11 @@ namespace ECommerce.Domain.Models
         public string Description { get; private set; }
         public decimal Price { get; private set; }
 
+        public Product()
+        {
+            // required by EF
+        }
+
         public Product(string name, string description, decimal price, uint quantity)
         {
             if(PrimaryValidator.IsValid(name)) Name = name;

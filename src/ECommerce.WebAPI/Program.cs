@@ -1,10 +1,11 @@
-
+using ECommerce.Infra.Context;
 using ECommerce.Application.Interfaces;
 using ECommerce.Application.Services;
 using ECommerce.Infra.Interfaces;
-using ECommerce.Infra.Repositories;
 using ECommerce.WebAPI.Filters;
 using ECommerce.WebAPI.Middlewares;
+using Microsoft.EntityFrameworkCore;
+using ECommerce.Infra.Repositories;
 
 namespace ECommerce.WebAPI
 {
@@ -23,15 +24,20 @@ namespace ECommerce.WebAPI
                 });
             });
 
-
             // ILogger
             builder.Services.AddLogging();
 
+            // DbContext
+            builder.Services.AddDbContext<AppDbContext>(options =>
+            {
+                options.UseSqlite((builder.Configuration.GetConnectionString("ECommerceSqlite")));
+            });
+
             // Repositories
-            builder.Services.AddSingleton<IProductRepository, ProductRepository>();
-            builder.Services.AddSingleton<ISaleRepository, SaleRepository>();
-            builder.Services.AddSingleton<IRefundRepository, RefundRepository>();
-            builder.Services.AddSingleton<IExchangeRepository, ExchangeRepository>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+            builder.Services.AddScoped<IRefundRepository, RefundRepository>();
+            builder.Services.AddScoped<IExchangeRepository, ExchangeRepository>();
 
             // Services
             builder.Services.AddScoped<IProductService, ProductService>();

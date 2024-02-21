@@ -1,19 +1,24 @@
 ﻿using ECommerce.Domain.Models;
+using ECommerce.Infra.Context;
 using ECommerce.Infra.Interfaces;
 
 namespace ECommerce.Infra.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        internal readonly List<T> _entities = new();
-        private uint _nextId = 1;
+        internal readonly AppDbContext _context;
         private string _specificEntity = typeof(T).Name;
+
+        public Repository(AppDbContext context)
+        {
+            _context = context;
+        }
         public T Add(T entityToAdd)
         {
             if (!EntityExist(entityToAdd))
             {
-                entityToAdd.Id = _nextId++;
-                _entities.Add(entityToAdd);
+                _context.Set<T>().Add(entityToAdd);
+                _context.SaveChangesAsync();
                 return entityToAdd;
             }
             throw new Exception($"Entity {_specificEntity} with properties described already exist.");
@@ -22,15 +27,17 @@ namespace ECommerce.Infra.Repositories
         public bool Delete(uint id)
         {
             var entityToDelete = Get(id);
-            _entities.Remove(entityToDelete);
+            _context.Set<T>().Remove(entityToDelete);
+            _context.SaveChangesAsync();
             return true;
         }
 
-        public T Get(uint id)
+        public virtual T Get(uint id)
         {
-            if (_entities.FirstOrDefault(entity => entity.Id == id) is T entityToReturn)
+            if (_context.Set<T>().FirstOrDefault(entity => entity.Id == id) is T entityToReturn)
             {
                 entityToReturn.SetId(id);
+                _context.SaveChangesAsync();
                 return entityToReturn;
             }
 
@@ -38,9 +45,9 @@ namespace ECommerce.Infra.Repositories
         }
 
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
-            return _entities;
+            return _context.Set<T>();
         }
 
         public T Update(T newEntity)
@@ -52,14 +59,14 @@ namespace ECommerce.Infra.Repositories
                 var newValue = prop.GetValue(newEntity);
                 prop.SetValue(existingEntity, newValue);
             }
-
+            _context.SaveChangesAsync();
             return existingEntity;
 
         }
 
         public bool EntityExist(T entityToAdd)
         {
-            return _entities.Any(existingEntity =>
+            return _context.Set<T>().AsEnumerable().Any(existingEntity =>
                         existingEntity.GetType().GetProperties()
                             .Where(prop => prop.Name != "Id")
                             .All(prop => object.Equals(

@@ -8,7 +8,10 @@ namespace ECommerce.Domain.Models
         public DateTime RefundDate { get; set; }
         public Sale OriginalSale { get; set; }
         public decimal RefundAmount { get; set; }
-
+        public Refund()
+        {
+            // required by EF
+        }
         public Refund(Sale originalSale)
         {
             decimal amount = originalSale.Amount;

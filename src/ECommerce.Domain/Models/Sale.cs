@@ -8,8 +8,13 @@ namespace ECommerce.Domain.Models
         public DateTime SaleDate { get; private set; }
         public decimal Amount { get; private set; }
         public Product SoldProduct { get; private set; }
-
         public bool IsCancelled { get; private set; }
+
+        public Sale()
+        {
+            // required by EF
+        }
+
         public Sale(Product soldProduct)
         {
             IsCancelled = false;
