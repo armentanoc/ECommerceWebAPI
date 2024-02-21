@@ -2,6 +2,7 @@
 using ECommerce.ViewModels;
 using ECommerce.Domain.Models;
 using ECommerce.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ECommerce.WebAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("Get all refunds")]
         public ActionResult<IEnumerable<Refund>> GetAll()
         {
             var refund = _service.GetAll();
@@ -25,6 +27,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [SwaggerOperation("Get a refund by id")]
         public ActionResult<IEnumerable<Refund>> Get([FromRoute] uint id)
         {
             var refund = _service.Get(id);
@@ -32,6 +35,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation("Create a new refund")]
         public IActionResult Add([FromBody] RefundRequest request)
         {
             var refund = _service.Add(request);

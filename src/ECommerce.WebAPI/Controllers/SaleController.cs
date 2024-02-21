@@ -2,6 +2,7 @@
 using ECommerce.ViewModels;
 using ECommerce.Domain.Models;
 using ECommerce.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ECommerce.WebAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("Get all sales")]
         public ActionResult<IEnumerable<Sale>> GetAll()
         {
             var sales = _service.GetAll();
@@ -25,6 +27,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [SwaggerOperation("Get a sale by id")]
         public ActionResult<IEnumerable<Sale>> Get([FromRoute] uint id)
         {
             var sale = _service.Get(id);
@@ -32,6 +35,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation("Create a new sale")]
         public IActionResult Add([FromBody] SaleRequest saleRequest)
         {
             if (_service.Add(saleRequest) is Sale sale) 

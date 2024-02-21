@@ -2,6 +2,7 @@
 using ECommerce.Domain.Models;
 using ECommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ECommerce.WebAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("Get all products")]
         public ActionResult<IEnumerable<Product>> GetAll()
         {
             var products = _service.GetAll();
@@ -25,6 +27,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [SwaggerOperation("Get a product by id")]
         public IActionResult Get([FromRoute] uint id)
         {
             var product = _service.Get(id);
@@ -32,6 +35,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation("Create a new product")]
         public IActionResult Add([FromBody] ProductRequest request)
         {
             if (_service.Add(request) is Product product) 
@@ -41,6 +45,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpGet]
         [Route("filter")]
+        [SwaggerOperation("Filter a product by word in name")]
         public ActionResult<IEnumerable<Product>> FilterByName([FromQuery] string name)
         {
             var filteredProducts = _service.FilterByName(name);
@@ -49,6 +54,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [SwaggerOperation("Delete a product")]
         public IActionResult Delete([FromRoute] uint id)
         {
             if (_service.Delete(id))

@@ -2,6 +2,7 @@
 using ECommerce.ViewModels;
 using ECommerce.Domain.Models;
 using ECommerce.Application.Interfaces;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace ECommerce.WebAPI.Controllers
 {
@@ -17,6 +18,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
+        [SwaggerOperation("Get all exchanges")]
         public ActionResult<IEnumerable<Exchange>> GetAll()
         {
             var exchanges = _service.GetAll();
@@ -25,6 +27,7 @@ namespace ECommerce.WebAPI.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [SwaggerOperation("Get an exchange by id")]
         public ActionResult<IEnumerable<Exchange>> Get([FromRoute] uint id)
         {
             var exchanges = _service.Get(id);
@@ -32,6 +35,7 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpPost]
+        [SwaggerOperation("Create a new exchange")]
         public IActionResult Add([FromBody] ExchangeRequest exchangeRequest)
         {
             var exchange = _service.Add(exchangeRequest);

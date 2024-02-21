@@ -6,6 +6,7 @@ using ECommerce.WebAPI.Filters;
 using ECommerce.WebAPI.Middlewares;
 using Microsoft.EntityFrameworkCore;
 using ECommerce.Infra.Repositories;
+using Microsoft.OpenApi.Models;
 
 namespace ECommerce.WebAPI
 {
@@ -13,12 +14,14 @@ namespace ECommerce.WebAPI
     {
         public static void Main(string[] args)
         {
+            var apiName = "E-Commerce Web API";
+
             var builder = WebApplication.CreateBuilder(args);
 
             //Cors
             builder.Services.AddCors(corsOptions =>
             {
-                corsOptions.AddPolicy("localhost", policyBuilder =>
+                corsOptions.AddPolicy("DevEnvPolicy", policyBuilder =>
                 {
                     policyBuilder.WithOrigins("http://localhost:5000");
                 });
@@ -53,20 +56,21 @@ namespace ECommerce.WebAPI
             });
 
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = apiName, Version = "v1" });
+                c.EnableAnnotations();
+            });
 
             var app = builder.Build();
 
             if (app.Environment.IsDevelopment())
             {
-                //Adds Cors Middleware
-                app.UseCors("localhost");
+                //Adds Cors Middleware in Dev Environment
+                app.UseCors("DevEnvPolicy");
                 app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "E-Commerce Web API v1");
-                    c.RoutePrefix = "swagger";
-                });
+                app.UseSwaggerUI();
             }
 
             // Logging Middleware
