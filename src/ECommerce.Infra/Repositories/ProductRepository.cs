@@ -18,5 +18,10 @@ namespace ECommerce.Infra.Repositories
             Add(product2);
             Add(product3);
         }
+
+        public IEnumerable<Product> FilterByName(string name)
+        {
+            return _entities.Where(p => p.Name.Contains(name, System.StringComparison.OrdinalIgnoreCase));
+        }
     }
 }

@@ -62,5 +62,10 @@ namespace ECommerce.Application.Services
             Update(product);
             return product;
         }
+
+        public IEnumerable<Product> FilterByName(string name)
+        {
+            return _products.FilterByName(name);
+        }
     }
 }

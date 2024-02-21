@@ -10,5 +10,6 @@ namespace ECommerce.Application.Interfaces
         Product Update(Product productToUpdate);
         Product TryIncreasingQuantity(Product product);
         Product TryDecreasingQuantity(Product product);
+        IEnumerable<Product> FilterByName(string name);
     }
 }

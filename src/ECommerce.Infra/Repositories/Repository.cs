@@ -5,7 +5,7 @@ namespace ECommerce.Infra.Repositories
 {
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
-        private readonly List<T> _entities = new();
+        internal readonly List<T> _entities = new();
         private uint _nextId = 1;
         private string _specificEntity = typeof(T).Name;
         public T Add(T entityToAdd)
