@@ -41,7 +41,7 @@ O projeto utiliza o SQLite como banco de dados, e as configurações podem ser e
 ## Execução do Projeto ▶️
 1. Clone e abra a solução no Visual Studio.
 2. Configure o projeto `ECommerce.Infra` como o projeto de inicialização no `Package Manager Console`.
-3. Certifique-se de que as migrações do banco de dados foram realizadas pelo Entity Framework. Se não, execute os seguintes comandos no console do NuGet:
+3. Certifique-se de que as migrações do banco de dados foram realizadas pelo Entity Framework. Se não, execute os seguintes comandos:
 ```
 Add-Migration CreateDatabaseInitial
 Update-Database
