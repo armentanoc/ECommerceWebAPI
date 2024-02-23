@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240221185913_CreateDatabaseInitial")]
+    [Migration("20240223180125_CreateDatabaseInitial")]
     partial class CreateDatabaseInitial
     {
         /// <inheritdoc />
@@ -34,6 +34,9 @@ namespace ECommerce.Infra.Migrations
 
                     b.Property<uint>("OriginalSaleId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("PriceDifference")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

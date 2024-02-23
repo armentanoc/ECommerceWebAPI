@@ -23,7 +23,11 @@ namespace ECommerce.WebAPI
             {
                 corsOptions.AddPolicy("DevEnvPolicy", policyBuilder =>
                 {
-                    policyBuilder.WithOrigins("http://localhost:5000");
+                    policyBuilder
+                    .WithOrigins("http://localhost:5000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    ;
                 });
             });
 

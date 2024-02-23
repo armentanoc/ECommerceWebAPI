@@ -26,6 +26,20 @@ Projeto que contém os modelos de visualização utilizados pelos controladores.
 ## Teste da Política de Cors 🔐
 
 A pasta `/test` (`index.html`, `styles.css`, `scripts.js`) contém o teste da Política de Cors implementada, que só permite o acesso a recursos da API através da rota `localhost:5000`: para visualização, é possível obter todos os produtos, vendas, reembolsos e devoluções, além de realizar o filtro por nome de produto.
+Obs.: Garanta que as configurações do servidor que rode o FrontEnd de testes (ex.: Live Server), ignore os arquivos de log gerados para impedir que a página seja recarregada após uma requisição POST com sucesso. 
+Por exemplo, no Live Server, os settings.json podem ignorar totalmente a pasta do BackEnd (`/src`) no `settings.json`:
+
+```
+{
+    (...)
+    "liveServer.settings.ignoreFiles": [
+
+        (...)
+        "src/**"
+    ]
+}
+```
+
 
 ## Configuração do Banco de Dados 🛢️
 O projeto utiliza o SQLite como banco de dados, e as configurações podem ser encontradas no arquivo `appsettings.json` do projeto `ECommerce.WebAPI`. Certifique-se de ajustar as configurações conforme necessário.

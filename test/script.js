@@ -29,7 +29,7 @@ function displayResult(result, resultSectionId) {
     } else if (result && result.message) {
         resultSection.innerHTML = `<p>${result.message}</p>`;
     } else if (result && result.error) {
-        resultSection.innerHTML = `<p>Error: ${result.error}</p>`;
+        resultSection.innerHTML = `<p>Error: ${JSON.stringify(result.error, null, 2)}</p>`;
     } else {
         resultSection.innerHTML = `<p>No data available.</p>`;
     }

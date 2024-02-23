@@ -57,7 +57,8 @@ namespace ECommerce.Infra.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     ExchangeDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     OriginalSaleId = table.Column<uint>(type: "INTEGER", nullable: false),
-                    NewProductId = table.Column<uint>(type: "INTEGER", nullable: false)
+                    NewProductId = table.Column<uint>(type: "INTEGER", nullable: false),
+                    PriceDifference = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
