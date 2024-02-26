@@ -1,6 +1,6 @@
 ﻿
 using ECommerce.Domain.Models;
-using ECommerce.ViewModels;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Interfaces
 {

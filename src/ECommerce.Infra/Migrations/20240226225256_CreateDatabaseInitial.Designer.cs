@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerce.Infra.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240221185913_CreateDatabaseInitial")]
+    [Migration("20240226225256_CreateDatabaseInitial")]
     partial class CreateDatabaseInitial
     {
         /// <inheritdoc />
@@ -29,15 +29,13 @@ namespace ECommerce.Infra.Migrations
                     b.Property<DateTime>("ExchangeDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<uint>("NewProductId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<uint>("OriginalSaleId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.Property<decimal>("PriceDifference")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("NewProductId");
+                    b.HasKey("Id");
 
                     b.HasIndex("OriginalSaleId");
 
@@ -67,6 +65,48 @@ namespace ECommerce.Infra.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Models.ProductExchange", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("ExchangeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExchangeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductExchange");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Models.ProductSale", b =>
+                {
+                    b.Property<uint>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("ProductId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<uint>("SaleId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SaleId");
+
+                    b.ToTable("ProductSale");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Models.Refund", b =>
@@ -106,33 +146,58 @@ namespace ECommerce.Infra.Migrations
                     b.Property<DateTime>("SaleDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<uint>("SoldProductId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SoldProductId");
 
                     b.ToTable("Sale");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Models.Exchange", b =>
                 {
-                    b.HasOne("ECommerce.Domain.Models.Product", "NewProduct")
-                        .WithMany()
-                        .HasForeignKey("NewProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ECommerce.Domain.Models.Sale", "OriginalSale")
                         .WithMany()
                         .HasForeignKey("OriginalSaleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("NewProduct");
-
                     b.Navigation("OriginalSale");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Models.ProductExchange", b =>
+                {
+                    b.HasOne("ECommerce.Domain.Models.Exchange", "Exchange")
+                        .WithMany("ProductExchanges")
+                        .HasForeignKey("ExchangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerce.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exchange");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ECommerce.Domain.Models.ProductSale", b =>
+                {
+                    b.HasOne("ECommerce.Domain.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ECommerce.Domain.Models.Sale", "Sale")
+                        .WithMany("SaleProducts")
+                        .HasForeignKey("SaleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Sale");
                 });
 
             modelBuilder.Entity("ECommerce.Domain.Models.Refund", b =>
@@ -146,15 +211,14 @@ namespace ECommerce.Infra.Migrations
                     b.Navigation("OriginalSale");
                 });
 
+            modelBuilder.Entity("ECommerce.Domain.Models.Exchange", b =>
+                {
+                    b.Navigation("ProductExchanges");
+                });
+
             modelBuilder.Entity("ECommerce.Domain.Models.Sale", b =>
                 {
-                    b.HasOne("ECommerce.Domain.Models.Product", "SoldProduct")
-                        .WithMany()
-                        .HasForeignKey("SoldProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("SoldProduct");
+                    b.Navigation("SaleProducts");
                 });
 #pragma warning restore 612, 618
         }

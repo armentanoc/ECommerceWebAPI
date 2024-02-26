@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.ViewModels
-{
+namespace ECommerce.ViewModels.Requests;
     public class ProductRequest : Request
     {
         [Required(ErrorMessage = "O nome do produto é obrigatório.")]
@@ -22,10 +21,10 @@ namespace ECommerce.ViewModels
             Price = price;
             Quantity = quantity;
 
-            if(description.Equals("string")) 
+            if (description.Equals("string"))
                 description = "Vazia";
 
             Description = description;
         }
     }
-}
+

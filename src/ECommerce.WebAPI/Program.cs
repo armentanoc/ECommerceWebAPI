@@ -23,7 +23,11 @@ namespace ECommerce.WebAPI
             {
                 corsOptions.AddPolicy("DevEnvPolicy", policyBuilder =>
                 {
-                    policyBuilder.WithOrigins("http://localhost:5000");
+                    policyBuilder
+                    .WithOrigins("http://localhost:5000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    ;
                 });
             });
 
@@ -41,12 +45,16 @@ namespace ECommerce.WebAPI
             builder.Services.AddScoped<ISaleRepository, SaleRepository>();
             builder.Services.AddScoped<IRefundRepository, RefundRepository>();
             builder.Services.AddScoped<IExchangeRepository, ExchangeRepository>();
+            builder.Services.AddScoped<IProductExchangeRepository, ProductExchangeRepository>();
+            builder.Services.AddScoped<IProductSaleRepository, ProductSaleRepository>();
 
             // Services
             builder.Services.AddScoped<IProductService, ProductService>();
             builder.Services.AddScoped<ISaleService, SaleService>();
             builder.Services.AddScoped<IRefundService, RefundService>();
             builder.Services.AddScoped<IExchangeService, ExchangeService>();
+            builder.Services.AddScoped<IProductExchangeService, ProductExchangeService>();
+            builder.Services.AddScoped<IProductSaleService, ProductSaleService>();
 
             // Controllers
             builder.Services.AddControllers(options =>

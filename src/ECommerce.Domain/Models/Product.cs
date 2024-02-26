@@ -1,4 +1,5 @@
-﻿using ECommerce.Domain.Utils;
+﻿
+using ECommerce.Domain.Utils;
 
 namespace ECommerce.Domain.Models
 {
@@ -17,9 +18,9 @@ namespace ECommerce.Domain.Models
         public Product(string name, string description, decimal price, uint quantity)
         {
             if(PrimaryValidator.IsValid(name)) Name = name;
-            if(PrimaryValidator.IsValid(description)) Description = description;
             if(PrimaryValidator.IsValid(price)) Price = price;
             if(PrimaryValidator.IsValid(quantity)) QuantityRemaining = quantity;
+            Description = description;
         }
 
         public void IncreaseQuantity()

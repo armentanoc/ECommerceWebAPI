@@ -55,3 +55,28 @@ button:hover {
     border-radius: 4px;
     background-color: #fff;
 }
+
+.section {
+    margin-top: 20px;
+}
+
+#productDetails,
+#updateProductForm,
+#productForm,
+#saleForm,
+#refundForm,
+#exchangeForm {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#productResult,
+#saleResult,
+#refundResult,
+#exchangeResult {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    margin-bottom: 20px;
+}

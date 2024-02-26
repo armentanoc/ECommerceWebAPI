@@ -1,7 +1,7 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
-using ECommerce.ViewModels;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Services
 {
@@ -17,6 +17,7 @@ namespace ECommerce.Application.Services
             _productService = productService;
             _refunds = refunds;
         }
+
         public Refund Add(RefundRequest request)
         {
             var newRefund = GetRefundFromRequest(request);
@@ -38,16 +39,27 @@ namespace ECommerce.Application.Services
             return _refunds.GetAll();
         }
 
-        public Refund Update(RefundRequest request)
-        {
-            throw new NotImplementedException();
-        }
         public Refund GetRefundFromRequest(RefundRequest request)
         {
             var sale = _saleService.Get(id: request.SaleId);
-            _saleService.TryCancellingSale(sale);
-            _productService.TryIncreasingQuantity(product: sale.SoldProduct);
-            return new Refund(sale);
+
+            if (sale != null && !sale.IsCancelled)
+            {
+                foreach (var product in sale.SaleProducts.ConvertAll(ps => ps.Product))
+                    _productService.TryIncreasingQuantity(product);
+
+                _saleService.TryCancellingSale(sale);
+                return new Refund(sale);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Refund Update(RefundRequest newEntityRequest, uint id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -2,7 +2,7 @@
 using ECommerce.Application.CustomExceptions;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
-using ECommerce.ViewModels;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Services
 {
@@ -44,9 +44,16 @@ namespace ECommerce.Application.Services
 
         public Sale GetSaleFromRequest(SaleRequest request)
         {
-            var product = _productService.Get(id: request.ProductId);
-            _productService.TryDecreasingQuantity(product);
-            return new Sale(product);
+            var products = new List<Product>();
+
+            foreach (var productId in request.ProductIds)
+            {
+                var product = _productService.Get(productId);
+                _productService.TryDecreasingQuantity(product); 
+                products.Add(product);
+            }
+
+            return new Sale(products);
         }
 
         public void TryCancellingSale(Sale sale)
@@ -59,6 +66,11 @@ namespace ECommerce.Application.Services
         }
 
         public Sale Update(SaleRequest newEntityRequest)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Sale Update(SaleRequest newEntityRequest, uint id)
         {
             throw new NotImplementedException();
         }
