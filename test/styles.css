@@ -60,6 +60,8 @@ button:hover {
     margin-top: 20px;
 }
 
+#productDetails,
+#updateProductForm,
 #productForm,
 #saleForm,
 #refundForm,

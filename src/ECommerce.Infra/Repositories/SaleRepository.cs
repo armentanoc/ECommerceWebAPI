@@ -9,26 +9,32 @@ namespace ECommerce.Infra.Repositories
     {
         public SaleRepository(AppDbContext context) : base(context)
         {
-            //required by EF
+            // required by EF
         }
 
         public override Sale Get(uint id)
         {
-            if (_context.Sale
-                    .Include(sale => sale.SoldProduct)
-                    .FirstOrDefault(entity => entity.Id == id) is Sale entityToReturn)
+            var entityToReturn = _context.Sale
+                .Include(s => s.SaleProducts)
+                    .ThenInclude(ps => ps.Product)
+                .FirstOrDefault(s => s.Id == id);
+
+            if (entityToReturn != null)
             {
                 entityToReturn.SetId(id);
-                _context.SaveChangesAsync();
                 return entityToReturn;
             }
 
-            throw new Exception($"Entity {nameof(entityToReturn)} with id {id} doesn't exist.");
+            throw new Exception($"Entity with id {id} doesn't exist.");
         }
+
 
         public override IEnumerable<Sale> GetAll()
         {
-            return _context.Sale.Include(s => s.SoldProduct).ToList();
+            return _context.Sale
+                .Include(s => s.SaleProducts)
+                    .ThenInclude(ps => ps.Product) 
+                .ToList();
         }
     }
 }

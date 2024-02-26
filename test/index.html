@@ -24,8 +24,10 @@
         <div class="buttons-section">
             <button onclick="getAllProducts()">Produtos</button>
             <button onclick="getAllSales()">Vendas</button>
+            <button onclick="getAllProductSales()">Produtos por Venda</button>
             <button onclick="getAllRefunds()">Reembolsos</button>
             <button onclick="getAllExchanges()">Trocas</button>
+            <button onclick="getAllProductExchanges()">Novos Produtos por Troca</button>
         </div>
         
         <br><div id="result" class="result-section"></div>
@@ -40,7 +42,7 @@
                 <label for="productPrice">Preço do Produto:</label>
                 <input type="number" id="productPrice" step="0.01" required><br><br>
                 <label for="productQuantity">Quantidade do Produto:</label>
-                <input type="number" id="productQuantity" required><br><br>
+                <input type="number" id="productQuantity" setp="1" required><br><br>
                 <label for="productDescription">Descrição do Produto:</label>
                 <input type="text" id="productDescription" placeholder="Esse campo é opcional"><br><br>
                 <button type="button" onclick="submitProductForm()">Criar Produto</button>
@@ -49,13 +51,39 @@
             <br><div id="productResult" class="result-section"></div>
         </div>
 
+        <div class="section">
+            <h2>Atualizar Produto</h2>
+        
+            <form id="updateProductForm">
+                <label for="updateProductId">ID do Produto:</label>
+                <input type="number" id="updateProductId" placeholder="Enter product ID" required><br>
+                <br><button type="button" onclick="getProductDetails()">Obter Detalhes do Produto</button><br><br>
+            </form>
+        
+            <div id="productDetails" style="display: none;">
+                <label for="updateProductName">Nome do Produto:</label>
+                <input type="text" id="updateProductName"><br><br>
+                <label for="updateProductPrice">Preço do Produto:</label>
+                <input type="number" id="updateProductPrice" step="0.01" required><br><br>
+                <label for="updateProductQuantity">Quantidade do Produto:</label>
+                <input type="number" id="updateProductQuantity" step="1" required><br><br>
+                <label for="updateProductDescription">Descrição do Produto:</label>
+                <input type="text" id="updateProductDescription" placeholder="Esse campo é opcional"><br><br>
+        
+                <button type="button" onclick="submitUpdateProductForm()">Atualizar Produto</button><br><br>
+            </div>
+        
+            <div id="updateProductResult" class="result-section"></div>
+        </div>
+        
+
         <!-- Create Sale Section -->
         <div class="section">
             <h2>Criar Venda</h2>
 
             <form id="saleForm">
-                <label for="saleProductId">ID do Produto:</label>
-                <input type="number" id="saleProductId" required>
+                <label for="saleProductId">IDs dos Produtos:</label>
+                <input type="text" id="saleProductId" placeholder="ex.: 1, 2, 3" required>
                 <br><br><button type="button" onclick="submitSaleForm()">Criar Venda</button>
             </form>
 
@@ -82,9 +110,9 @@
             <form id="exchangeForm">
                 <label for="exchangeSaleId">ID da Venda:</label>
                 <input type="number" id="exchangeSaleId" required>
-                <br><br><label for="exchangeNewProductId">ID do Produto:</label>
-                <input type="number" id="exchangeNewProductId" placeholder="ID do Produto Novo" required>
-                <br><br><button type="button" onclick="submitExchangeForm()">Criar Devolução</button>
+                <br><br><label for="exchangeNewProductId">IDs dos Produtos:</label>
+                <input type="text" id="exchangeNewProductId" placeholder="ex.: 1, 2, 3" required>
+                <br><br><button type="button" onclick="submitExchangeForm()">Criar Troca</button>
             </form>
 
             <br><div id="exchangeResult" class="result-section"></div>

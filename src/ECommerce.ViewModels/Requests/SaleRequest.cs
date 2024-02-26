@@ -1,16 +1,16 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.ViewModels
+namespace ECommerce.ViewModels.Requests
 {
     public class SaleRequest : Request
     {
         [Required(ErrorMessage = "O Id do produto é obrigatório.")]
-        public uint ProductId { get; init; }
+        public uint[] ProductIds { get; init; }
 
-        public SaleRequest(uint productId)
+        public SaleRequest(uint[] productIds)
         {
-            ProductId = productId;
+            ProductIds = productIds;
         }
     }
 }

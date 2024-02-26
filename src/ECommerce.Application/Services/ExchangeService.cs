@@ -1,7 +1,7 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
-using ECommerce.ViewModels;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Services
 {
@@ -17,6 +17,7 @@ namespace ECommerce.Application.Services
             _productService = productService;
             _saleService = saleService;
         }
+
         public Exchange Add(ExchangeRequest request)
         {
             var newExchange = GetExchangeFromRequest(request);
@@ -38,22 +39,33 @@ namespace ECommerce.Application.Services
             return _exchanges.GetAll();
         }
 
-        public Exchange Update(ExchangeRequest request)
+        public Exchange Update(ExchangeRequest request, uint id)
         {
             throw new NotImplementedException();
         }
+
         public Exchange GetExchangeFromRequest(ExchangeRequest request)
         {
             var sale = _saleService.Get(id: request.SaleId);
-            _saleService.TryCancellingSale(sale);
+            var oldProducts = sale.SaleProducts.ConvertAll(ps => ps.Product);
+            var newProducts = new List<Product>();
 
-            var oldProduct = sale.SoldProduct;
-            var newProduct = _productService.Get(id: request.ProductId);
+            if (!sale.IsCancelled)
+            {
+                foreach (var productRequest in request.ProductIds)
+                {
+                    var product = _productService.Get(productRequest);
+                    _productService.TryDecreasingQuantity(product);
+                    newProducts.Add(product);
+                }
 
-            _productService.TryDecreasingQuantity(newProduct);
-            _productService.TryIncreasingQuantity(oldProduct);
+                foreach (var oldProduct in oldProducts)
+                    _productService.TryIncreasingQuantity(oldProduct);
 
-            return new Exchange(sale, newProduct);
+                _saleService.TryCancellingSale(sale);
+            }
+
+            return new Exchange(sale, newProducts);
         }
     }
 }

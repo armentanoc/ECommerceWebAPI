@@ -59,6 +59,20 @@ function getAllExchanges() {
     });
 }
 
+
+
+function getAllProductSales() {
+    fetchData("http://localhost:5500/api/productSale", { method: "GET" }, (result) => {
+        displayResult(result, "result");
+    });
+}
+
+function getAllProductExchanges() {
+    fetchData("http://localhost:5500/api/productExchange", { method: "GET" }, (result) => {
+        displayResult(result, "result");
+    });
+}
+
 function filterProductsByName() {
     const productName = document.getElementById("productNameToFilter").value;
 
@@ -101,9 +115,10 @@ function submitProductForm() {
 
 function submitSaleForm() {
     const saleProductId = document.getElementById("saleProductId").value;
+    const newProductIdsArray = saleProductId.split(',').map(part => parseInt(part.trim()));
 
     const saleData = {
-        ProductId: parseInt(saleProductId),
+        ProductIds: newProductIdsArray,
     };
 
     const requestOptions = {
@@ -146,10 +161,11 @@ function submitRefundForm() {
 function submitExchangeForm() {
     const saleId = document.getElementById("exchangeSaleId").value;
     const newProductId = document.getElementById("exchangeNewProductId").value;
+    const newProductIdsArray = newProductId.split(',').map(part => parseInt(part.trim()));
 
     const exchangeData = {
         SaleId: parseInt(saleId),
-        ProductId: parseInt(newProductId)
+        ProductIds: newProductIdsArray
     };
 
     const requestOptions = {
@@ -164,3 +180,53 @@ function submitExchangeForm() {
         displayResult(result, "exchangeResult");
     });
 }
+
+function getProductDetails() {
+    const updateProductId = document.getElementById("updateProductId").value;
+
+    fetchData(`http://localhost:5500/api/product/${updateProductId}`, { method: "GET" }, (result) => {
+        if (result && !result.error) {
+            displayProductDetails(result);
+        } else {
+            displayResult({ message: "Produto não encontrado." }, "updateProductResult");
+        }
+    });
+}
+
+function displayProductDetails(product) {
+    document.getElementById("updateProductName").value = product.name;
+    document.getElementById("updateProductPrice").value = product.price;
+    document.getElementById("updateProductQuantity").value = product.quantityRemaining;
+    document.getElementById("updateProductDescription").value = product.description;
+
+    document.getElementById("productDetails").style.display = "block";
+}
+
+function submitUpdateProductForm() {
+    const updateProductId = document.getElementById("updateProductId").value;
+    const updateProductName = document.getElementById("updateProductName").value;
+    const updateProductPrice = document.getElementById("updateProductPrice").value;
+    const updateProductQuantity = document.getElementById("updateProductQuantity").value;
+    const updateProductDescription = document.getElementById("updateProductDescription").value;
+
+    const updatedProductData = {
+        Name: updateProductName,
+        Price: parseFloat(updateProductPrice),
+        Quantity: parseInt(updateProductQuantity),
+        Description: updateProductDescription
+    };
+
+    const requestOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProductData),
+    };
+
+    fetchData(`http://localhost:5500/api/product/${updateProductId}`, requestOptions, (result) => {
+        displayResult(result, "updateProductResult");
+    });
+}
+
+

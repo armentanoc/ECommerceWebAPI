@@ -4,8 +4,7 @@ using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Interfaces
 {
-    public interface IRefundService : IService<Refund, RefundRequest>
+    public interface IProductSaleService : IService<ProductSale, ProductSaleRequest>
     {
-        Refund GetRefundFromRequest(RefundRequest request);
     }
 }

@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace ECommerce.ViewModels
+namespace ECommerce.ViewModels.Requests
 {
     public class RefundRequest : Request
     {

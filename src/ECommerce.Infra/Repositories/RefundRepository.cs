@@ -9,29 +9,32 @@ namespace ECommerce.Infra.Repositories
     {
         public RefundRepository(AppDbContext context) : base(context)
         {
-            //required by EF
+            // required by EF
         }
 
         public override Refund Get(uint id)
         {
-            if (_context.Refund
-                    .Include(r => r.OriginalSale)
-                        .ThenInclude(r => r.SoldProduct)
-                    .FirstOrDefault(entity => entity.Id == id) is Refund entityToReturn)
+            var entityToReturn = _context.Refund
+                .Include(r => r.OriginalSale)
+                    .ThenInclude(s => s.SaleProducts)
+                        .ThenInclude(ps => ps.Product) 
+                .FirstOrDefault(r => r.Id == id);
+
+            if (entityToReturn != null)
             {
                 entityToReturn.SetId(id);
-                _context.SaveChangesAsync();
                 return entityToReturn;
             }
 
-            throw new Exception($"Entity {nameof(entityToReturn)} with id {id} doesn't exist.");
+            throw new Exception($"Entity with id {id} doesn't exist.");
         }
 
         public override IEnumerable<Refund> GetAll()
         {
             return _context.Refund
                 .Include(r => r.OriginalSale)
-                    .ThenInclude(r => r.SoldProduct)
+                    .ThenInclude(s => s.SaleProducts)
+                        .ThenInclude(ps => ps.Product) 
                 .ToList();
         }
     }

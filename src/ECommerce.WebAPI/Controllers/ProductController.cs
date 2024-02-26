@@ -1,8 +1,8 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
-using ECommerce.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.WebAPI.Controllers
 {
@@ -39,6 +39,16 @@ namespace ECommerce.WebAPI.Controllers
         public IActionResult Add([FromBody] ProductRequest request)
         {
             if (_service.Add(request) is Product product) 
+                return Ok(product);
+            return BadRequest(request);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [SwaggerOperation("Update a product")]
+        public IActionResult Update([FromBody] ProductRequest request, uint id)
+        {
+            if (_service.Update(request, id) is Product product)
                 return Ok(product);
             return BadRequest(request);
         }

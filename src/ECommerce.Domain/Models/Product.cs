@@ -1,4 +1,5 @@
-﻿using ECommerce.Domain.Utils;
+﻿
+using ECommerce.Domain.Utils;
 
 namespace ECommerce.Domain.Models
 {

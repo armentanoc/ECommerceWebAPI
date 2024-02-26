@@ -1,7 +1,7 @@
 ﻿using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Models;
 using ECommerce.Infra.Interfaces;
-using ECommerce.ViewModels;
+using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.Application.Services
 {
@@ -34,9 +34,10 @@ namespace ECommerce.Application.Services
             return _products.GetAll();
         }
 
-        public Product Update(ProductRequest request)
+        public Product Update(ProductRequest request, uint id)
         {
             var newProduct = GetProductByRequest(request);
+            newProduct.SetId(id);
             return _products.Update(newProduct);
         }
 
