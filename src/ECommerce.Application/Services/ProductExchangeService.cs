@@ -24,6 +24,11 @@ namespace ECommerce.Application.Services
             return _repository.GetAll();
         }
 
+        public IEnumerable<object> GetAllExchangeInformation()
+        {
+            return _repository.GetAllExchangeInformation();
+        }
+
         public ProductExchange Add(ProductExchangeRequest newEntityRequest)
         {
             throw new NotImplementedException();

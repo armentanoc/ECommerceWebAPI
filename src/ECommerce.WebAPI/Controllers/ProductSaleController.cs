@@ -17,10 +17,10 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation("Get all product-exchange relations")]
-        public ActionResult<IEnumerable<ProductSale>> GetAll()
+        [SwaggerOperation("Get complete sale information")]
+        public ActionResult<IEnumerable<object>> GetAll()
         {
-            var relations = _service.GetAll();
+            var relations = _service.GetCompleteProductSaleInformation();
             return Ok(relations);
         }
     }

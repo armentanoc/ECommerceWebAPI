@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ECommerce.Domain.Models;
 using ECommerce.Application.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -17,10 +16,10 @@ namespace ECommerce.WebAPI.Controllers
         }
 
         [HttpGet]
-        [SwaggerOperation("Get all product-exchange relations")]
-        public ActionResult<IEnumerable<ProductExchange>> GetAll()
+        [SwaggerOperation("Get all exchange information")]
+        public ActionResult<IEnumerable<object>> GetAll()
         {
-            var relations = _service.GetAll();
+            var relations = _service.GetAllExchangeInformation();
             return Ok(relations);
         }
     }

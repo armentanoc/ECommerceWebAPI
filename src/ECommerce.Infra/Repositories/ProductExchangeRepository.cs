@@ -12,15 +12,26 @@ namespace ECommerce.Infra.Repositories
             // required by EF
         }
 
-        public override IEnumerable<ProductExchange> GetAll()
+        public IEnumerable<object> GetAllExchangeInformation()
         {
-            return _context.ProductExchange
-                .Include(ps => ps.Product)
-                .Include(ps => ps.Exchange)
-                    .ThenInclude(ps => ps.OriginalSale)
-                        .ThenInclude(s => s.SaleProducts)
-                            .ThenInclude(ps => ps.Product)
+            var productExchanges = _context.ProductExchange
+                .Include(pe => pe.Product)
+                .Include(pe => pe.Exchange)
+                    .ThenInclude(e => e.OriginalSale)
+                        .ThenInclude(os => os.SaleProducts)
+                            .ThenInclude(sp => sp.Product)
                 .ToList();
+
+            var groupedProductExchanges = productExchanges
+                .GroupBy(pe => pe.ExchangeId)
+                .Select(group => new
+                {
+                    exchangeId = group.Key,
+                    exchange = group.First().Exchange, 
+                    products = group.Select(pe => pe.Product)
+                });
+            return groupedProductExchanges.ToList();
         }
+
     }
 }
