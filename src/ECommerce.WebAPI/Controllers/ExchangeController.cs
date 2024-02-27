@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ECommerce.ViewModels.Requests;
 using ECommerce.Domain.Models;
 using ECommerce.Application.Interfaces;
 using Swashbuckle.AspNetCore.Annotations;
-using ECommerce.ViewModels.Requests;
 
 namespace ECommerce.WebAPI.Controllers
 {
