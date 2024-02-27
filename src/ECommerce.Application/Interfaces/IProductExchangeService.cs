@@ -6,5 +6,6 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IProductExchangeService : IService<ProductExchange, ProductExchangeRequest>
     {
+        public IEnumerable<object> GetAllExchangeInformation();
     }
 }

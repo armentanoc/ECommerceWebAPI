@@ -15,8 +15,6 @@ namespace ECommerce.Infra.Repositories
         public override Sale Get(uint id)
         {
             var entityToReturn = _context.Sale
-                .Include(s => s.SaleProducts)
-                    .ThenInclude(ps => ps.Product)
                 .FirstOrDefault(s => s.Id == id);
 
             if (entityToReturn != null)
@@ -32,8 +30,6 @@ namespace ECommerce.Infra.Repositories
         public override IEnumerable<Sale> GetAll()
         {
             return _context.Sale
-                .Include(s => s.SaleProducts)
-                    .ThenInclude(ps => ps.Product) 
                 .ToList();
         }
     }

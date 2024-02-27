@@ -6,5 +6,6 @@ namespace ECommerce.Application.Interfaces
 {
     public interface IProductSaleService : IService<ProductSale, ProductSaleRequest>
     {
+        public IEnumerable<object> GetCompleteProductSaleInformation();
     }
 }

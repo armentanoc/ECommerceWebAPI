@@ -23,6 +23,11 @@ namespace ECommerce.Application.Services
             return _repository.GetAll();
         }
 
+        public IEnumerable<object> GetCompleteProductSaleInformation()
+        {
+            return _repository.GetCompleteProductSaleInformation();
+        }
+
         public ProductSale Add(ProductSaleRequest newEntityRequest)
         {
             throw new NotImplementedException();

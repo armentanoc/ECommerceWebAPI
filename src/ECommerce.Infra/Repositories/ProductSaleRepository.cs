@@ -12,21 +12,21 @@ namespace ECommerce.Infra.Repositories
             // required by EF
         }
 
-        public override IEnumerable<ProductSale> GetAll()
+        public IEnumerable<object> GetCompleteProductSaleInformation()
         {
             var productSales = _context.ProductSale
                 .Include(ps => ps.Product)
                 .Include(ps => ps.Sale)
                 .ToList();
 
-            var distinctSaleIds = productSales
-                .Select(ps => ps.SaleId)
-                .Distinct();
-
-            var groupedProductSales = distinctSaleIds
-                .SelectMany(saleId => productSales
-                    .Where(ps => ps.SaleId == saleId)
-                );
+            var groupedProductSales = productSales
+                .GroupBy(ps => ps.SaleId)
+                .Select(group => new
+                {
+                    saleId = group.Key,
+                    sale = group.First().Sale, 
+                    products = group.Select(ps => ps.Product)
+                });
 
             return groupedProductSales.ToList();
         }
