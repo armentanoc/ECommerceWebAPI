@@ -12,6 +12,17 @@ namespace ECommerce.Infra.Repositories
             // required by EF
         }
 
+        public IEnumerable<Product> GetAllProductsBySale(uint saleId)
+        {
+            var products = _context.ProductSale
+                .Where(ps => ps.SaleId == saleId)
+                .Include(ps => ps.Product)
+                .Select(ps => ps.Product)
+                .ToList();
+
+            return products;
+        }
+
         public IEnumerable<object> GetCompleteProductSaleInformation()
         {
             var productSales = _context.ProductSale

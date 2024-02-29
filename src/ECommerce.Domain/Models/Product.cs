@@ -19,7 +19,7 @@ namespace ECommerce.Domain.Models
         {
             if(PrimaryValidator.IsValid(name)) Name = name;
             if(PrimaryValidator.IsValid(price)) Price = price;
-            if(PrimaryValidator.IsValid(quantity)) QuantityRemaining = quantity;
+            if(PrimaryValidator.IsValid(quantity, true)) QuantityRemaining = quantity;
             Description = description;
         }
 

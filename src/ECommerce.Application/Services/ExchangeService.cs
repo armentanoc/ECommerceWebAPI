@@ -10,12 +10,14 @@ namespace ECommerce.Application.Services
         private readonly IExchangeRepository _exchanges;
         private readonly IProductService _productService;
         private readonly ISaleService _saleService;
+        private readonly IProductSaleService _productSaleService;
 
-        public ExchangeService(IExchangeRepository exchanges, IProductService productService, ISaleService saleService)
+        public ExchangeService(IExchangeRepository exchanges, IProductService productService, ISaleService saleService, IProductSaleService productSaleService)
         {
             _exchanges = exchanges;
             _productService = productService;
             _saleService = saleService;
+            _productSaleService = productSaleService;
         }
 
         public Exchange Add(ExchangeRequest request)
@@ -47,7 +49,7 @@ namespace ECommerce.Application.Services
         public Exchange GetExchangeFromRequest(ExchangeRequest request)
         {
             var sale = _saleService.Get(id: request.SaleId);
-            var oldProducts = sale.SaleProducts.ConvertAll(ps => ps.Product);
+            var oldProducts = _productSaleService.GetAllProductsBySale(request.SaleId);
             var newProducts = new List<Product>();
 
             if (!sale.IsCancelled)
@@ -59,8 +61,10 @@ namespace ECommerce.Application.Services
                     newProducts.Add(product);
                 }
 
-                foreach (var oldProduct in oldProducts)
-                    _productService.TryIncreasingQuantity(oldProduct);
+                foreach (var product in oldProducts)
+                {
+                    _productService.TryIncreasingQuantity(product);
+                }
 
                 _saleService.TryCancellingSale(sale);
             }
