@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECommerce | Teste CORS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar">
+            <h1>E-Commerce | Reembolsos</h1>
+            <a href="index.html">Produtos</a>
+            <a href="sales.html">Vendas</a>
+            <a href="refunds.html">Reembolsos</a>
+            <a href="exchanges.html">Trocas</a>
+        </nav>
+    </div>
+    <div class="container">
+        <!-- Buttons Section -->
+         <div class="buttons-section">
+            <button onclick="getAllRefunds()">Visualizar Reembolsos</button>
+        </div>
+        <div class="result-section">
+            <div id="result"></div>
+        </div>
+</div>
+<div class="container">
+        <!-- Create Refund Section -->
+        <div class="section">
+            <h2>Criar Reembolso</h2>
+
+            <form id="refundForm">
+                <input type="number" id="refundSaleId" placeholder="Digite o ID da Venda">
+                <br><br><button type="button" onclick="submitRefundForm()">Criar Reembolso</button>
+            </form>
+
+            <br>
+            <div id="refundResult" class="result-section"></div>
+        </div>
+    </div>
+</body>
+
+</html>
