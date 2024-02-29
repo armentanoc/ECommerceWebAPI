@@ -2,7 +2,7 @@
 
 Este é um projeto ASP.NET Core que utiliza o Entity Framework Core em conjunto com o SQLite para armazenamento persistente, gerenciando um sistema de E-Commerce (Produtos, Vendas, Reembolsos e Devoluções) fundado em uma Web API Rest, com visualização da aplicação da política de Cors e de algumas das funcionalidades da API via Front End. 
 <div align="center" display="flex">
-<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/d214cda3-50d1-4df3-be5d-8a9a8eae21a9" height="500px">
+<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/1f89e867-1db5-4543-ab85-596c06708419" height="500px">
 </div>
 
 ## Estrutura do Projeto :building_construction:
@@ -28,7 +28,7 @@ Projeto que contém os modelos de visualização utilizados pelos controladores.
 
 ## Política de Cors 🔐
 
-A pasta `/test` (`index.html`, `styles.css`, `scripts.js`) contém o teste da Política de Cors implementada, que só permite o acesso a recursos da API através da rota `localhost:5000`: para visualização, é possível obter todos os produtos, vendas, reembolsos e devoluções, além de realizar o filtro por nome de produto.
+A pasta `/app` (`index.html`, `styles.css`, `scripts.js`) contém o teste da Política de Cors implementada, que só permite o acesso a recursos da API através da rota `localhost:5000`: para visualização, é possível obter todos os produtos, vendas, reembolsos e devoluções, além de realizar o filtro por nome de produto.
 Obs.: Garanta que as configurações do servidor que rode o FrontEnd de testes (ex.: Live Server), ignore os arquivos de log gerados para impedir que a página seja recarregada após uma requisição POST com sucesso. 
 Por exemplo, no Live Server, os settings.json podem ignorar totalmente a pasta do BackEnd (`/src`) no `settings.json`:
 
@@ -86,17 +86,6 @@ https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/d9299bec-d467-4b06
 ## Endpoints da API 🚀
 A API oferece os seguintes endpoints:
 
-### Exchange 🔄
-```
-GET /api/exchange: Obtém todas as trocas.
-POST /api/exchange: Cria uma nova troca.
-GET /api/exchange/{id}: Obtém uma troca pelo ID.
-```
-### ProductExchange 🔄
-```
-GET /api/productExchange: Obtém as informações completas de trocas, enriquecida pelas tabelas de Vendas, Produto e relação Produtos por Troca. 
-```
-
 ### Product 👕
 ```
 GET /api/product: Obtém todos os produtos.
@@ -107,22 +96,63 @@ DELETE /api/product/{id}: Deleta um produto pelo ID.
 GET /api/product/filter: Filtra produtos por nome.
 ```
 
+---
+
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/57fc4ff3-7e8d-449e-93ec-eae4c6ebe77f" height="500px">
+</div>
+
+### Sale 🛍️
+
+```
+GET /api/sale: Obtém todas as vendas.
+POST /api/sale: Cria uma nova venda.
+GET /api/sale/{id}: Obtém uma venda pelo ID.
+```
+
+---
+
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/390f3b06-d72e-4236-9442-89e52eabae07" height="500px">
+</div>
+
+### ProductSale 🛍️
+
+```
+GET /api/productSale: Obtém as informações completas de vendas, enriquecida pelas tabelas de Produto e relação Produtos por Venda. 
+```
+
 ### Refund ◀️
+
 ```
 GET /api/refund: Obtém todos os reembolsos.
 POST /api/refund: Cria um novo reembolso.
 GET /api/refund/{id}: Obtém um reembolso pelo ID.
 ```
 
-### Sale 🛍️
+---
+
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/790a6a51-a071-4574-a41b-487d7296a36c" height="500px">
+</div>
+
+### Exchange 🔄
+
 ```
-GET /api/sale: Obtém todas as vendas.
-POST /api/sale: Cria uma nova venda.
-GET /api/sale/{id}: Obtém uma venda pelo ID.
+GET /api/exchange: Obtém todas as trocas.
+POST /api/exchange: Cria uma nova troca.
+GET /api/exchange/{id}: Obtém uma troca pelo ID.
 ```
-### ProductSale 🛍️
+
+---
+
+<div align="center" display="flex">
+<img src="https://github.com/armentanoc/ECommerceWebAPI/assets/88147887/2be54332-e733-425a-a15e-acad60c044e0" height="500px">
+</div>
+
+### ProductExchange 🔄
 ```
-GET /api/productSale: Obtém as informações completas de vendas, enriquecida pelas tabelas de Produto e relação Produtos por Venda. 
+GET /api/productExchange: Obtém as informações completas de trocas, enriquecida pelas tabelas de Vendas, Produto e relação Produtos por Troca. 
 ```
 
 ## Documentação da API 📚
