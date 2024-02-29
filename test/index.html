@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECommerce | Teste CORS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>E-Commerce</h1>
+
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <label for="productNameToFilter">Nome do Produto:</label>
+            <input type="text" id="productNameToFilter" placeholder="Digite o nome do produto">
+            <button onclick="filterProductsByName()">Filtrar Produtos</button>
+        </div>
+        
+        <!-- Buttons Section -->
+        <div class="buttons-section">
+            <button onclick="getAllProducts()">Produtos</button>
+             <!--<button onclick="getAllSales()">Vendas</button>-->
+            <button onclick="getAllProductSales()">Vendas</button>
+            <button onclick="getAllRefunds()">Reembolsos</button>
+            <!--<button onclick="getAllExchanges()">Trocas</button>-->
+            <button onclick="getAllProductExchanges()">Trocas</button>
+        </div>
+        
+        <br><div id="result" class="result-section"></div>
+
+        <!-- Create Product Section -->
+        <div class="section">
+            <h2>Criar Produto</h2>
+
+            <form id="productForm">
+                <label for="productName">Nome do Produto:</label>
+                <input type="text" id="productName"><br><br>
+                <label for="productPrice">Preço do Produto:</label>
+                <input type="number" id="productPrice" step="0.01" required><br><br>
+                <label for="productQuantity">Quantidade do Produto:</label>
+                <input type="number" id="productQuantity" setp="1" required><br><br>
+                <label for="productDescription">Descrição do Produto:</label>
+                <input type="text" id="productDescription" placeholder="Esse campo é opcional"><br><br>
+                <button type="button" onclick="submitProductForm()">Criar Produto</button>
+            </form>
+
+            <br><div id="productResult" class="result-section"></div>
+        </div>
+
+        <div class="section">
+            <h2>Atualizar Produto</h2>
+        
+            <form id="updateProductForm">
+                <label for="updateProductId">ID do Produto:</label>
+                <input type="number" id="updateProductId" placeholder="Enter product ID" required><br>
+                <br><button type="button" onclick="getProductDetails()">Obter Detalhes do Produto</button><br><br>
+            </form>
+        
+            <div id="productDetails" style="display: none;">
+                <label for="updateProductName">Nome do Produto:</label>
+                <input type="text" id="updateProductName"><br><br>
+                <label for="updateProductPrice">Preço do Produto:</label>
+                <input type="number" id="updateProductPrice" step="0.01" required><br><br>
+                <label for="updateProductQuantity">Quantidade do Produto:</label>
+                <input type="number" id="updateProductQuantity" step="1" required><br><br>
+                <label for="updateProductDescription">Descrição do Produto:</label>
+                <input type="text" id="updateProductDescription" placeholder="Esse campo é opcional"><br><br>
+        
+                <button type="button" onclick="submitUpdateProductForm()">Atualizar Produto</button><br><br>
+            </div>
+        
+            <div id="updateProductResult" class="result-section"></div>
+        </div>
+        
+
+        <!-- Create Sale Section -->
+        <div class="section">
+            <h2>Criar Venda</h2>
+
+            <form id="saleForm">
+                <label for="saleProductId">IDs dos Produtos:</label>
+                <input type="text" id="saleProductId" placeholder="ex.: 1, 2, 3" required>
+                <br><br><button type="button" onclick="submitSaleForm()">Criar Venda</button>
+            </form>
+
+            <br><div id="saleResult" class="result-section"></div>
+        </div>
+
+        <!-- Create Refund Section -->
+        <div class="section">
+            <h2>Criar Reembolso</h2>
+
+            <form id="refundForm">
+                <label for="refundSaleId">ID da Venda:</label>
+                <input type="number" id="refundSaleId" required>
+                <br><br><button type="button" onclick="submitRefundForm()">Criar Reembolso</button>
+            </form>
+
+            <br><div id="refundResult" class="result-section"></div>
+        </div>
+
+        <!-- Create Exchange Section -->
+        <div class="section">
+            <h2>Criar Troca</h2>
+
+            <form id="exchangeForm">
+                <label for="exchangeSaleId">ID da Venda:</label>
+                <input type="number" id="exchangeSaleId" required>
+                <br><br><label for="exchangeNewProductId">IDs dos Produtos:</label>
+                <input type="text" id="exchangeNewProductId" placeholder="ex.: 1, 2, 3" required>
+                <br><br><button type="button" onclick="submitExchangeForm()">Criar Troca</button>
+            </form>
+
+            <br><div id="exchangeResult" class="result-section"></div>
+        </div>
+
+    </div>
+</body>
+
+</html>

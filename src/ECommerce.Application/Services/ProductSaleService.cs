@@ -27,10 +27,7 @@ namespace ECommerce.Application.Services
         {
             return _repository.GetCompleteProductSaleInformation();
         }
-        public IEnumerable<Product> GetAllProductsBySale(uint saleId)
-        {
-            return _repository.GetAllProductsBySale(saleId);
-        }
+
         public ProductSale Add(ProductSaleRequest newEntityRequest)
         {
             throw new NotImplementedException();

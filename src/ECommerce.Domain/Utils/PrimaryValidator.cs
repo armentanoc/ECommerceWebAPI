@@ -9,11 +9,9 @@ namespace ECommerce.Domain.Utils
             throw new ArgumentException($"String value can't be null, empty or whitespace. ({value})");
         }
 
-        public static bool IsValid(decimal value, bool isQuantity = false)
+        public static bool IsValid(decimal value)
         {
-            if (isQuantity && value == 0)
-                return true;
-            else if (value > 0) return true;
+            if (value > 0) return true;
             throw new ArgumentException($"Value must be greater than zero. ({value})");
         }
     }
