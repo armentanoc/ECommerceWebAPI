@@ -1,4 +1,4 @@
-﻿# Projeto E-Commerce Web API :globe_with_meridians:
+﻿# Projeto E-Commerce Web API Rest :globe_with_meridians:
 
 Este é um projeto ASP.NET Core que utiliza o Entity Framework Core em conjunto com o SQLite para armazenamento persistente, gerenciando um sistema de E-Commerce (Produtos, Vendas, Reembolsos e Devoluções) fundado em uma Web API Rest, com visualização da aplicação da política de Cors e de algumas das funcionalidades da API via Front End. 
 <div align="center" display="flex">
