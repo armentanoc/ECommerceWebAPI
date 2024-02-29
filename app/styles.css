@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    color: #333;
 }
 
 .container {
@@ -16,22 +17,81 @@ body {
 
 h1 {
     text-align: center;
+    position: relative;
+    float: left;
     color: #333;
+    padding-left: 24px;
+}
+
+nav a {
+    text-decoration: none;
+    color: #333;
+    justify-content: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    padding-left: 10px;
+    width: 100%;
+    z-index: 1000;
+}
+
+.navbar h1 {
+    float: inline-start;
+    text-align: center;
+}
+
+.navbar a {
+    text-decoration: none;
+    padding: 14px 16px;
+    text-align: center;
+}
+
+.navbar a:hover {
+    color: #4CAF50;
+}
+
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar h1 {
+        margin-bottom: 10px;
+    }
+
+    .navbar a {
+        width: 100%;
+        box-sizing: border-box;
+    }
+    .filter-section {
+        margin-bottom: 20px;
+    }
+}
+
+ul {
+    padding-left: 0;
+    list-style: none;
 }
 
 .filter-section {
     text-align: center;
-    margin-bottom: 20px;
 }
 
 input {
     padding: 8px;
     margin: 0 10px;
+    margin-top: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    width: 50%;
 }
 
 button {
+    margin-top: 20px;
     padding: 10px 20px;
     background-color: #4CAF50;
     color: #fff;
@@ -50,6 +110,7 @@ button:hover {
 }
 
 .result-section {
+    padding-top: 20px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 4px;
